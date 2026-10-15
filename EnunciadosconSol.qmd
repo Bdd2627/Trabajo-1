@@ -1,0 +1,211 @@
+---
+title: "Problemas de Teoría de la Decisión bajo Incertidumbre"
+author: "Daniel Gallego Cortés"
+format:
+  html:
+    toc: true
+    
+  pdf:
+    documentclass: article
+    papersize: a4
+    geometry:
+      - margin=25mm
+    
+lang: es
+
+
+
+---
+
+# Problema 1: Inversión en Energías Renovables
+
+
+
+Sea la siguiente tabla de decisión:
+
+| Alternativas      | $E_1$ | $E_2$ | $E_3$ |
+|:------------------|:-----:|:-----:|:-----:|
+| $A_1$             |  120  |  60   |  10   |
+| $A_2$             |  180  |  40   |  -20  |
+| $A_3$             |  250  |  20   |  -60  |
+
+## Cuestionario (Verdadero o Falso)
+
+Indique razonadamente si las siguientes afirmaciones son verdaderas (V) o falsas (F), considerando tanto la situación favorable (maximización de beneficios) como la desfavorable (minimización de costes o pérdidas equivalentes):
+
+1.  En situación favorable, el criterio de Wald (pesimista o maximin) selecciona la alternativa $A_1$ .
+2.  En situación favorable, el criterio optimista (maximax) selecciona la alternativa $A_3$ .
+3.  Bajo el criterio de Laplace (equiprobabilidad), la alternativa óptima en situación favorable es $A_2$ .
+4.  El criterio de Hurwicz con un índice de optimismo $\alpha = 0.6$ selecciona la alternativa $A_3$ en situación favorable.
+5.  En situación desfavorable (suponiendo que los valores representan costes), el criterio de Savage (minimax del arrepentimiento) selecciona la alternativa $A_1$.
+
+
+## Código de la solución
+
+
+Veamos los métodos para el caso favorable:
+```{r}
+source("teoriadecision_funciones_incertidumbre.R")
+datos = c(120, 60, 10, 180, 40, -20, 250, 20, -60)#Datos del problema
+tabla = crea.tablaX(datos, numalternativas = 3)
+
+
+#Wald o pesimista:
+Wald=criterio.Wald(tabla)
+paste(
+"La decisión optima según el criterio de wald es la alternativa",
+Wald$AlternativaOptima)
+
+#Optimista:
+Opt=criterio.Optimista(tabla)
+paste(
+"La decisión optimasegún el criterio optimista es la alternativa",
+Opt$AlternativaOptima)
+
+#Hurwicz(Factor de optimismo):
+Hurw=criterio.Hurwicz(tabla,alfa = 0.4)
+paste(
+"La decisión optima según el criterio de Hurwicz con alfa 0.4 es la alternativa",
+Hurw$AlternativaOptima)
+
+dibuja.criterio.Hurwicz(tabla)#Ver la opcion que se elige segun el alfa
+dibuja.criterio.Hurwicz_Intervalos(tabla)
+#En esta te indica tanto grafica como numericamente
+#en que intervalo se elige cada una
+
+#Savage:
+Sav=criterio.Savage(tabla)
+paste(
+  "La decisión optima según el criterio de Savage es la alternativa",
+  Sav$AlternativaOptima)
+
+#Laplace:
+Lapl=criterio.Laplace(tabla)
+paste(
+  "La decisión optima según el criterio de Laplace es la alternativa",
+  Lapl$AlternativaOptima)
+#Punto ideal:
+Punt=criterio.PuntoIdeal(tabla)
+paste(
+  "La decisión optima según el criterio del punto ideal es la alternativa",
+  Punt$AlternativaOptima)
+```
+
+Y en el caso desfavorable:
+```{r}
+source("teoriadecision_funciones_incertidumbre.R")
+datos = c(120, 60, 10, 180, 40, -20, 250, 20, -60)#Datos del problema
+tabla = crea.tablaX(datos, numalternativas = 3)
+
+
+#Wald o pesimista:
+Wald=criterio.Wald(tabla,favorable = FALSE)
+paste(
+  "La decisión optima según el criterio de wald es la alternativa",
+  Wald$AlternativaOptima)
+
+#Optimista:
+Opt=criterio.Optimista(tabla,favorable = FALSE)
+paste(
+  "La decisión optima según el criterio optimista es la alternativa",
+  Opt$AlternativaOptima)
+
+#Hurwicz(Factor de optimismo):
+Hurw=criterio.Hurwicz(tabla,alfa = 0.4,favorable = FALSE)
+paste(
+  "La decisión optim según el criterio de Hurwicz con alfa 0.4 es la alternativa",
+  Hurw$AlternativaOptima)
+
+dibuja.criterio.Hurwicz(tabla,favorable = FALSE)#Ver la opcion que se elige segun el alfa
+dibuja.criterio.Hurwicz_Intervalos(tabla,favorable = FALSE)
+#En esta te indica tanto grafica como numericamente 
+#en que intervalo se elige cada una
+
+#Savage:
+Sav=criterio.Savage(tabla,favorable = FALSE)
+paste(
+  "La decisión optima según el criterio de Savage es la alternativa",
+  Sav$AlternativaOptima)
+
+#Laplace:
+Lapl=criterio.Laplace(tabla,favorable = FALSE)
+paste(
+  "La decisión optima según el criterio de Laplace es la alternativa",
+  Lapl$AlternativaOptima)
+#Punto ideal:
+Punt=criterio.PuntoIdeal(tabla,favorable = FALSE)
+paste(
+  "La decisión optima según el criterio del punto ideal es la alternativa",
+  Punt$AlternativaOptima)
+```
+
+## Respuestas
+
+Por tanto las respuestas a las preguntas inciales serán:
+
+1.  En situación favorable, el criterio de Wald (pesimista o maximin) selecciona la alternativa $A_1$ (Solar). **Verdadero**
+
+2.  En situación favorable, el criterio optimista (maximax) selecciona la alternativa $A_3$ (Hidrógeno). **Verdadero**
+
+3.  Bajo el criterio de Laplace (equiprobabilidad), la alternativa óptima en situación favorable es $A_2$ (Eólica). **Falso**
+
+4.  El criterio de Hurwicz con un índice de optimismo $\alpha = 0.6$ selecciona la alternativa $A_3$ en situación favorable. **Verdadero**
+
+5.  En situación desfavorable (suponiendo que los valores representan costes), el criterio de Savage (minimax del arrepentimiento) selecciona la alternativa $A_1$. **Falso**
+
+
+
+# Problema 2: Planificación Logística ante Contingencias Climáticas
+
+Una compañía de transporte internacional de mercancías debe decidir la ruta de distribución para una flota de camiones de alta capacidad que debe cruzar una cordillera durante la temporada invernal. Existen cuatro posibles rutas alternativas ($R_1$, $R_2$, $R_3$ y $R_4$) que implican diferentes costes operativos y de tiempo (en miles de euros), los cuales dependen de la severidad de las condiciones meteorológicas imprevistas que se presenten:
+
+- $E_1$: Temporal leve (cortes mínimos de tráfico).
+- $E_2$: Temporal moderado (cierres parciales y desvíos).
+- $E_3$: Temporal severo (tormenta extrema y bloqueos prolongados).
+
+La matriz de costes asociada a esta situación real es la siguiente:
+
+| Rutas                  | $E_1$ | $E_2$ | $E_3$ |
+|:-----------------------|:-----:|:-----:|:-----:|
+| $R_1$ (Ruta del Norte) |  15   |  28   |  55   |
+| $R_2$ (Ruta Central)   |  12   |  35   |  70   |
+| $R_3$ (Ruta del Sur)   |  20   |  25   |  40   |
+| $R_4$ (Ruta Costera)   |  25   |  30   |  35   |
+
+## Cuestionario (Verdadero o Falso)
+
+Indique si las siguientes afirmaciones derivadas del análisis conjunto mediante la función global de incertidumbre son verdaderas (V) o falsas (F):
+
+1.  Al tratarse de una matriz de costes en situación desfavorable, el criterio de Wald (minimax) selecciona la ruta $R_4$ (Ruta Costera) por tener el coste máximo más bajo ($35$).
+2.  Aplicando el criterio optimista (minimin) para costes, la mejor opción es la ruta $R_2$ (Ruta Central) gracias a su coste mínimo absoluto de $12$ en el estado $E_1$.
+3.  El criterio de Laplace asigna idéntica probabilidad a cada estado y determina que la ruta $R_1$ es estrictamente peor que todas las demás.
+4.  Utilizando el criterio de Savage (minimax del arrepentimiento), la tabla de costes de arrepentimiento muestra que la pérdida máxima para la ruta $R_3$ es de $10$ unidades.
+5.  El método de Hurwicz, considerando un coeficiente de optimismo pesimista ($\alpha = 0.5$), identifica a la ruta $R_3$ como una de las opciones más equilibradas frente al riesgo de tormentas extremas.
+
+## Código de la solución
+En este caso usaremos la funcion que nos da todos los metodos a la vez:
+```{r}
+datos2=c(15,	28,	55,
+        12,	35,	70,
+        20,	25,	40,
+        25,30	,35
+)
+tabla2=crea.tablaX(datos2,numalternativas = 4)
+
+
+SolDES=criterio.Todos(tabla2,alfa = 0.5,favorable = FALSE)
+
+library(knitr)
+kable(SolDES,caption = "Caso desfavorable")
+```
+## Respuestas
+Por tanto las soluciones de las preguntas iniciales son:
+1.  Al tratarse de una matriz de costes en situación desfavorable, el criterio de Wald (minimax) selecciona la ruta $R_4$ (Ruta Costera) por tener el coste máximo más bajo ($35$). **Verdadero**
+
+2.  Aplicando el criterio optimista (minimin) para costes, la mejor opción es la ruta $R_2$ (Ruta Central) gracias a su coste mínimo absoluto de $12$ en el estado $E_1$. **Verdadero**
+
+3.  El criterio de Laplace asigna idéntica probabilidad a cada estado y determina que la ruta $R_1$ es estrictamente peor que todas las demás. **Falso**
+
+4.  Utilizando el criterio de Savage (minimax del arrepentimiento), la tabla de costes de arrepentimiento muestra que la pérdida máxima para la ruta $R_3$ es de $10$ unidades. **Falso**
+
+5.  El método de Hurwicz, considerando un coeficiente de optimismo pesimista ($\alpha = 0.5$), identifica a la ruta $R_3$ como una de las opciones más equilibradas frente al riesgo de tormentas extremas. **Verdadero**

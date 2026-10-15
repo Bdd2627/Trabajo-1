@@ -1,6 +1,6 @@
 ---
 title: "Problemas de Teoría de la Decisión bajo Incertidumbre"
-author: "Estudiante de Teoría de la Decisión"
+author: "Daniel Gallego Cortés"
 format:
   html:
     toc: true
@@ -13,7 +13,7 @@ format:
 lang: es
 ---
 
-# Problema 1: Inversión en Energías Renovables (Tabla con valores inventados)
+# Problema 1: Inversión en Energías Renovables 
 
 Una empresa tecnológica está evaluando tres posibles alternativas estratégicas de inversión a corto plazo en el sector de las energías renovables ($A_1$: Inversión en energía solar fotovoltaica, $A_2$: Inversión en energía eólica terrestre, y $A_3$: Inversión en hidrógeno verde). Los beneficios netos estimados (en miles de euros) dependen de las condiciones del mercado y del marco regulatorio, las cuales se pueden clasificar en tres estados de la naturaleza:
 
@@ -41,7 +41,7 @@ Indique razonadamente si las siguientes afirmaciones son verdaderas (V) o falsas
 
 ---
 
-# Problema 2: Planificación Logística ante Contingencias Climáticas (Situación real)
+# Problema 2: Planificación Logística ante Contingencias Climáticas 
 
 Una compañía de transporte internacional de mercancías debe decidir la ruta de distribución para una flota de camiones de alta capacidad que debe cruzar una cordillera durante la temporada invernal. Existen cuatro posibles rutas alternativas ($R_1$, $R_2$, $R_3$ y $R_4$) que implican diferentes costes operativos y de tiempo (en miles de euros), los cuales dependen de la severidad de las condiciones meteorológicas imprevistas que se presenten:
 
